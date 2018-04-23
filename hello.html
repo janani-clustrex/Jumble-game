@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Jumbled words</title>
+	<script src="js/jumble.js">
+	</script>
+ </head>
+<body onload="setJumbleUI()">
+	<form>
+		<input type="radio" id="easy" value="easy" onclick="easyGame()">Easy</input>
+		<input type="radio" id="medium" value="medium" onclick="mediumGame()">Medium</input>
+		<input type="radio" id="difficult" value="difficult" onclick="toughGame()">Diffiult</input>
+		<div id="jumble">				
+		<fieldset id="mediumJumble">
+		  <legend>jumbled words</legend>
+	      <input type="text" id="output" placeholder="click on letters "  maxlength="4" readOnly />
+		  <button type="button" id="1" value="" onclick="fillAnswer('1')">T</button>
+		  <button type="button" id="2" value="" onclick="fillAnswer('2')">E</button>
+		  <button type="button" id="3" value="" onclick="fillAnswer('3')">X</button>
+		  <button type="button" id="4" value="" onclick="fillAnswer('4')")>T</button>
+		</fieldset>
+		<div id="action">
+		<button type="button" id="checker" onclick="isanswercorrect()">Submit</button>
+		<button type="button" id="next" onclick="nextWord()">Next</button>
+		<button type="button" id="reset" onclick="clearOutput()">Reset</button>
+		<p id="score" > score 0</p>
+		</div>
+	</form>
+</body>
+</html>
