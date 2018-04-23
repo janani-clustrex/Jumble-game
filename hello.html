@@ -1,29 +1,52 @@
 <html>
+
 <head>
 	<title>Jumbled words</title>
 	<script src="js/jumble.js">
+
 	</script>
- </head>
-<body onload="setJumbleUI()">
+</head>
+
+<body onload="whileOnloading()">
 	<form>
+		<div id="levels">
 		<input type="radio" id="easy" value="easy" onclick="easyGame()">Easy</input>
 		<input type="radio" id="medium" value="medium" onclick="mediumGame()">Medium</input>
 		<input type="radio" id="difficult" value="difficult" onclick="toughGame()">Diffiult</input>
-		<div id="jumble">				
-		<fieldset id="mediumJumble">
-		  <legend>jumbled words</legend>
-	      <input type="text" id="output" placeholder="click on letters "  maxlength="4" readOnly />
-		  <button type="button" id="1" value="" onclick="fillAnswer('1')">T</button>
-		  <button type="button" id="2" value="" onclick="fillAnswer('2')">E</button>
-		  <button type="button" id="3" value="" onclick="fillAnswer('3')">X</button>
-		  <button type="button" id="4" value="" onclick="fillAnswer('4')")>T</button>
-		</fieldset>
-		<div id="action">
-		<button type="button" id="checker" onclick="isanswercorrect()">Submit</button>
-		<button type="button" id="next" onclick="nextWord()">Next</button>
-		<button type="button" id="reset" onclick="clearOutput()">Reset</button>
-		<p id="score" > score 0</p>
 		</div>
+		<div id="difficulties">
+			<fieldset id="easyJumble">
+				<legend>jumbled words</legend>
+				<input type="text" id="easyOutput" placeholder="click on letters" maxlength="3" readonly />
+				<button type="button" id="easy1" value="" onclick="fillAnswer('1','easy')">T</button>
+				<button type="button" id="easy2" value="" onclick="fillAnswer('2','easy')">E</button>
+				<button type="button" id="easy3" value="" onclick="fillAnswer('3','easy')">X</button>
+			</fieldset>
+			<fieldset id="mediumJumble">
+				<legend>jumbled words</legend>
+				<input type="text" id="mediumOutput" placeholder="click on letters" maxlength="4" readOnly />
+				<button type="button" id="medium1" value="" onclick="fillAnswer('1','medium')">T</button>
+				<button type="button" id="medium2" value="" onclick="fillAnswer('2','medium')">E</button>
+				<button type="button" id="medium3" value="" onclick="fillAnswer('3','medium')">X</button>
+				<button type="button" id="medium4" value="" onclick="fillAnswer('4','medium')" )>T</button>
+			</fieldset>
+			<fieldset id="toughJumble">
+				<legend>jumbled words</legend>
+				<input type="text" id="toughOutput" placeholder="click on letters" maxlength="5" readOnly />
+				<button type="button" id="tough1" value="" onclick="fillAnswer('1','tough')">T</button>
+				<button type="button" id="tough2" value="" onclick="fillAnswer('2','tough')">E</button>
+				<button type="button" id="tough3" value="" onclick="fillAnswer('3','tough')">X</button>
+				<button type="button" id="tough4" value="" onclick="fillAnswer('4','tough')" )>T</button>
+				<button type="button" id="tough5" value="" onclick="fillAnswer('5','tough')">S</button>
+			</fieldset>
+			<div id="action">
+				<button type="button" id="checker" onclick="isanswercorrect()">Submit</button>
+				<button type="button" id="next" onclick="nextWord()">Next</button>
+				<button type="button" id="reset" onclick="clearOutput()">Reset</button>
+				<p id="score"> score 0</p>
+			</div>
+			</div>
 	</form>
 </body>
+
 </html>

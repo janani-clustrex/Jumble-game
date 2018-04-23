@@ -1,12 +1,13 @@
-console.log("Janani");
 
 // TODO : Add more words
 var easyjumble=["npe","avn","cta","odg","tei","ryt","xwa","cie","anm","wro","yee","ujg","oxf","yoj","upc","mgy","tew","kys"];
 var easyanswer=["pen","van","cat","dog","tie","try","wax","ice","man","row","eye","jug","fox","joy","cup","gym","wet","sky"];
 var mediumjumble=["lhep","eohp","dcru","uoyr","pnis","rokw","uthn","phso","rakp","gsno","alyp","mtei","npki","kboo","skir"];
 var mediumanswer=["help","hope","curd","your","spin","work","hunt","shop","park","song","play","time","pink","book","risk"];
-var toughjumble=["iktnh","tirwe","lcabk","wcorn","smeuo","hrasp","abkla","nophe","zapiz","izmbeo",""]
-var toughanswer=["think","write","black","crown","mouse","sharp","blank","phone","pizza","zombie",""]
+var toughjumble=["iktnh","tirwe","lcabk","wcorn","smeuo","hrasp","abkla","nophe","zapiz","izmbeo"]
+var toughanswer=["think","write","black","crown","mouse","sharp","blank","phone","pizza","zombie"]
+var thisJumble, outputId, answer, answerLength,level, levelComplexity;
+
 /*
 var jumble=["lhep","eohp","dcru","rbea","uoyr","pnis","rokw","uthn","phso","rakp","gsno","alyp","mtei","ilev","npki","kboo","aemt","eols","epon,skir"];
 var answer=["help","hope","curd","bear","your","spin","work","hunt","shop","park","song","play","time","live","pink","book","team","lose","open","risk"];
@@ -17,22 +18,27 @@ var index=0;
 var score=0;
 
 
-function setJumbleUI(){
-	var thisJumble=jumble[index];
-	console.log("Jumble is "+ thisJumble);
 
-	document.getElementById("1").innerHTML=thisJumble.charAt([0]);
-	document.getElementById("2").innerHTML=thisJumble.charAt([1]);
-	document.getElementById("3").innerHTML=thisJumble.charAt([2]);
-	document.getElementById("4").innerHTML=thisJumble.charAt([3]);
-var x = document.getElementById("jumble");
-    x.style.display = "none";
+function setJumbleUI(level){
+	thisJumble=level[index];
+	//var x = document.getElementById("jumble");
+	console.log('thisJumble', thisJumble.charAt([0]),levelComplexity);
+	document.getElementById(levelComplexity+"1").innerHTML=thisJumble.charAt([0]);
+	document.getElementById(levelComplexity+"2").innerHTML=thisJumble.charAt([1]);
+	document.getElementById(levelComplexity+"3").innerHTML=thisJumble.charAt([2]);
+
+	if(levelComplexity==="medium"||levelComplexity==="tough")
+	document.getElementById(levelComplexity+"4").innerHTML=thisJumble.charAt([3]);
+	if(levelComplexity==="tough")
+	document.getElementById(levelComplexity+"5").innerHTML=thisJumble.charAt([4]);
+
+    //x.style.display = "none";
 }
 
-function words(val)
-{
-document.getElementById("output").value=document.getElementById("output").value + val;
-}
+// function words(val)
+// {
+// document.getElementById("output").value=document.getElementById("output").value + val;
+// }
 function hideAndShow() {
     var x = document.getElementById("jumble");
     if (x.style.display === "none") {
@@ -41,44 +47,97 @@ function hideAndShow() {
 }
 
 function easyGame() {
-	console.log("i am in")
-hideAndShow();
-
-
+	 		
+	level=easyjumble;
+	levelComplexity="easy";
+	setJumbleUI(level);
+    var b=document.getElementById("difficulties");
+	 b.style.display="block";
+    var x=document.getElementById("mediumJumble");
+    x.style.display = "none";
+    var z=document.getElementById("toughJumble");
+    z.style.display = "none";
+    var y=document.getElementById("easyJumble");
+    y.style.display="block";
+	 var a=document.getElementById("levels");
+     a.style.display="none";
 }
 function mediumGame(){
-	 hideAndShow();
+	level=mediumjumble;
+	levelComplexity= "medium";
+	setJumbleUI(level);
+	var b=document.getElementById("difficulties");
+	 b.style.display="block";
+     var x=document.getElementById("toughJumble");
+	 x.style.display="none";
+	 var z=document.getElementById("easyJumble");
+	 z.style.display="none";
 	 var y=document.getElementById("mediumJumble");
 	 y.style.display = "block";
-
+	 var a=document.getElementById("levels");
+     a.style.display="none";
 
 }
+
 function toughGame(){
-	console.log("i am in")
-	hideAndShow();
+	level=toughjumble;
+	levelComplexity="tough";
+	setJumbleUI(level);
+	var b=document.getElementById("difficulties");
+	 b.style.display="block";
+	 var x=document.getElementById("toughJumble");
+	 x.style.display="block";
+	 var z=document.getElementById("easyJumble");
+	 z.style.display="none";
+	 var y=document.getElementById("mediumJumble");
+	 y.style.display = "none";
+	 var a=document.getElementById("levels");
+     a.style.display="none";
+
+
+	
 }
-function fillAnswer(id){
-
-	var thisJumble=jumble[index];
-
-	if ( id == "1") {
-		document.getElementById("output").value=document.getElementById("output").value + thisJumble.charAt([0]) ;
-		
-	} else if ( id == "2") {
-		document.getElementById("output").value=document.getElementById("output").value + thisJumble.charAt([1]) ;
-		
-	}else if ( id == "3") {
-		document.getElementById("output").value=document.getElementById("output").value + thisJumble.charAt([2]) ;
-		
-	}else if ( id == "4") {
-		document.getElementById("output").value=document.getElementById("output").value + thisJumble.charAt([3]) ;
-		
+function fillAnswer(id, level){
+	if(level=="easy") {
+		thisJumble=easyjumble[index];
+		outputId="easyOutput";
+		answer=easyanswer;
+		answerLength=3;
 	}
+	if(level=="medium"){
+		thisJumble=mediumjumble[index];
+		outputId="mediumOutput";
+		answer=mediumanswer;
+		answerLength=4;
+	}
+	if(level=="tough"){
+		thisJumble=toughjumble[index];
+		outputId="toughOutput";
+		answer=toughanswer;
+		answerLength=5;
+	}
+console.log('thisJumble', thisJumble.charAt([id-1]),outputId,level+'1', id);
+	if ( id == 1) {
+		document.getElementById(outputId).value=document.getElementById(outputId).value + thisJumble.charAt([id-1]) ;
+		console.log(document.getElementById(outputId).value);
+		
+	} else if ( id == 2) {
+		document.getElementById(outputId).value=document.getElementById(outputId).value + thisJumble.charAt([id-1]) ;
+		
+	}else if ( id == 3) {
+		document.getElementById(outputId).value=document.getElementById(outputId).value + thisJumble.charAt([id-1]) ;
+		
+	}else if ( id == 4) {
+		document.getElementById(outputId).value=document.getElementById(outputId).value + thisJumble.charAt([id-1]) ;
+		
+	}else if ( id == 5) {
+		document.getElementById(outputId).value=document.getElementById(outputId).value + thisJumble.charAt([id-1]) ;
+}
 }
 
 function isanswercorrect(){
-	var val = document.getElementById("output").value;
-	if(val.length==4 &&val==answer[index])
+	var val = document.getElementById(outputId).value;
+	if(val.length==answerLength &&val==answer[index])
 	{
       alert("Well done!! Correct answer!!");
       clearOutput();
@@ -99,24 +158,28 @@ function nextWord(){
 
 
 	index=index+1;
-	console.log("index " +index+" total words "+jumble.length);
 
 	// if all word finished, alert game over 
-     if(index>(jumble.length-1)){
+	console.log('thisJumble.length, index', level.length, index, thisJumble)
+     if(index>(level.length-1)){
      	
      	alert("Game over!!")
      } else {
-     	setJumbleUI();
+     	setJumbleUI(level);
      }
 
 }
 
 function clearOutput(){
-	document.getElementById("output").value = "";
+	document.getElementById(outputId).value = "";
 }
 
 function updateScore(){
 	document.getElementById("score").innerHTML="score "+score;
+
 }
-
-
+ function whileOnloading(){
+	 console.log(document.getElementById("easyOutput").maxLength)
+	 var b=document.getElementById("difficulties");
+	 b.style.display="none";
+ }
