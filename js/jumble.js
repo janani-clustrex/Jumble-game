@@ -150,7 +150,7 @@ function fillAnswer(id, level) {
 function isanswercorrect() {
 	var val = document.getElementById(outputId).value;
 	var splittedAnswer = randomAnsJumble[index];
-	if (randomAnsJumble[index].indexOf(",") !== -1)
+	if (randomAnsJumble[index].indexOf(",") !== "-1")
 		splittedAnswer = randomAnsJumble[index].split(",");
 	var success = false;
 	var failure = false;
@@ -188,26 +188,30 @@ function isanswercorrect() {
 
 	}
 }
+function calculateRandomArray(){
+return level[Math.floor(Math.random() * level.length)];
+}
 function randomArray(){
 	console.log(level);
 	for(i=0;i<10;i++){
-		/*for (index=0;index<randomJumble.length;index++){
-		if (randomJumble[index] === level[Math.floor(Math.random() * level.length)])
-		{
-			i--;
-		}
-		else */
+	 var x=	calculateRandomArray();
+	 if(randomJumble.indexOf(x) === -1){
+			randomJumble.push(x);
+
+	}
+	else{
+	x=calculateRandomArray();
+	}
+	}
 		
-	randomJumble.push(level[Math.floor(Math.random() * level.length)]);
-	
-		}	
 
 for(i=0;i<10;i++){
 	randomJumbleIndex = level.indexOf(randomJumble[i])
 	randomAnsJumble.push(answer[randomJumbleIndex])
 }
+}
 	
-	}	
+	
 
 
 function nextWord() {
@@ -217,7 +221,7 @@ function nextWord() {
 	index = index + 1;
 
 	// if all word finished, alert game over 
-	console.log('thisJumble.length, index', randomJumble);
+	console.log('randomJumble.length, index', randomJumble);
 	if (index > (randomJumble.length - 1)) {
 
 		alert("Game over!!")
