@@ -16,23 +16,25 @@ var answer=["help","hope","curd","bear","your","spin","work","hunt","shop","park
 
 var index = 0;
 var score = 0;
+var randomAnsJumble=[],randomJumble=[],randomJumbleIndex;
 
 
 
 
 
 function setJumbleUI(level) {
-	thisJumble = level[index];
+	thisJumble = randomJumble[index];
+	console.log(randomJumble, index, thisJumble);
 	//var x = document.getElementById("jumble");
-	console.log('thisJumble', thisJumble.charAt([0]), levelComplexity);
-	document.getElementById(levelComplexity + "1").innerHTML = thisJumble.charAt([0]);
-	document.getElementById(levelComplexity + "2").innerHTML = thisJumble.charAt([1]);
-	document.getElementById(levelComplexity + "3").innerHTML = thisJumble.charAt([2]);
+	
+	document.getElementById(levelComplexity + "1").innerHTML = randomJumble[index].charAt([0]);
+	document.getElementById(levelComplexity + "2").innerHTML = randomJumble[index].charAt([1]);
+	document.getElementById(levelComplexity + "3").innerHTML = randomJumble[index].charAt([2]);
 
 	if (levelComplexity === "medium" || levelComplexity === "tough")
-		document.getElementById(levelComplexity + "4").innerHTML = thisJumble.charAt([3]);
+		document.getElementById(levelComplexity + "4").innerHTML = randomJumble[index].charAt([3]);
 	if (levelComplexity === "tough")
-		document.getElementById(levelComplexity + "5").innerHTML = thisJumble.charAt([4]);
+		document.getElementById(levelComplexity + "5").innerHTML = randomJumble[index].charAt([4]);
 
 	//x.style.display = "none";
 }
@@ -49,9 +51,10 @@ function hideAndShow() {
 }
 
 function easyGame() {
-
 	level = easyjumble;
+	answer = easyanswer;
 	levelComplexity = "easy";
+	randomArray();
 	setJumbleUI(level);
 	var b = document.getElementById("difficulties");
 	b.style.display = "block";
@@ -63,10 +66,13 @@ function easyGame() {
 	y.style.display = "block";
 	var a = document.getElementById("levels");
 	a.style.display = "none";
+	
 }
 function mediumGame() {
 	level = mediumjumble;
+	answer = mediumanswer;
 	levelComplexity = "medium";
+	randomArray();
 	setJumbleUI(level);
 	var b = document.getElementById("difficulties");
 	b.style.display = "block";
@@ -83,7 +89,9 @@ function mediumGame() {
 
 function toughGame() {
 	level = toughjumble;
+	answer = toughanswer;
 	levelComplexity = "tough";
+	randomArray();
 	setJumbleUI(level);
 	var b = document.getElementById("difficulties");
 	b.style.display = "block";
@@ -95,6 +103,7 @@ function toughGame() {
 	y.style.display = "none";
 	var a = document.getElementById("levels");
 	a.style.display = "none";
+
 }
 
 function commaSpliter(string) {
@@ -105,28 +114,24 @@ function commaSpliter(string) {
 
 
 function fillAnswer(id, level) {
+	thisJumble = randomJumble[index];
 	if (level == "easy") {
-		thisJumble = easyjumble[index];
 		outputId = "easyOutput";
-		answer = easyanswer;
+		
 		answerLength = 3;
 	}
 	if (level == "medium") {
-		thisJumble = mediumjumble[index];
 		outputId = "mediumOutput";
-		answer = mediumanswer;
+		
 		answerLength = 4;
 	}
 	if (level == "tough") {
-		thisJumble = toughjumble[index];
 		outputId = "toughOutput";
-		answer = toughanswer;
 		answerLength = 5;
 	}
-	console.log('thisJumble', thisJumble.charAt([id - 1]), outputId, level + '1', id);
+	console.log('thisJumble', thisJumble);
 	if (id == 1) {
 		document.getElementById(outputId).value = document.getElementById(outputId).value + thisJumble.charAt([id - 1]);
-		console.log(document.getElementById(outputId).value);
 
 	} else if (id == 2) {
 		document.getElementById(outputId).value = document.getElementById(outputId).value + thisJumble.charAt([id - 1]);
@@ -144,9 +149,9 @@ function fillAnswer(id, level) {
 
 function isanswercorrect() {
 	var val = document.getElementById(outputId).value;
-	var splittedAnswer = answer[index];
-	if (answer[index].indexOf(",") !== -1)
-		splittedAnswer = answer[index].split(",");
+	var splittedAnswer = randomAnsJumble[index];
+	if (randomAnsJumble[index].indexOf(",") !== -1)
+		splittedAnswer = randomAnsJumble[index].split(",");
 	var success = false;
 	var failure = false;
 	if (typeof (splittedAnswer) === "string") {
@@ -183,6 +188,27 @@ function isanswercorrect() {
 
 	}
 }
+function randomArray(){
+	console.log(level);
+	for(i=0;i<10;i++){
+		/*for (index=0;index<randomJumble.length;index++){
+		if (randomJumble[index] === level[Math.floor(Math.random() * level.length)])
+		{
+			i--;
+		}
+		else */
+		
+	randomJumble.push(level[Math.floor(Math.random() * level.length)]);
+	
+		}	
+
+for(i=0;i<10;i++){
+	randomJumbleIndex = level.indexOf(randomJumble[i])
+	randomAnsJumble.push(answer[randomJumbleIndex])
+}
+	
+	}	
+
 
 function nextWord() {
 
@@ -191,12 +217,12 @@ function nextWord() {
 	index = index + 1;
 
 	// if all word finished, alert game over 
-	console.log('thisJumble.length, index', level.length, index, thisJumble)
-	if (index > (level.length - 1)) {
+	console.log('thisJumble.length, index', randomJumble);
+	if (index > (randomJumble.length - 1)) {
 
 		alert("Game over!!")
 	} else {
-		setJumbleUI(level);
+		setJumbleUI(randomJumble);
 	}
 
 }
@@ -210,7 +236,7 @@ function updateScore() {
 
 }
 function whileOnloading() {
-	console.log(document.getElementById("easyOutput").maxLength)
+	console.log(document.getElementById("easyOutput").maxLength);
 	var b = document.getElementById("difficulties");
 	b.style.display = "none";
 }
