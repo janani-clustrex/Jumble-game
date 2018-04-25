@@ -7,26 +7,23 @@ var mediumanswer = ["help", "hope", "curd", "your", "spin", "work", "hunt", "sho
 var toughjumble = ["iktnh", "tirwe", "lcabk", "wcorn", "smeuo", "hrasp", "abkln", "nophe", "zapiz"]
 var toughanswer = ["think", "write", "black", "crown", "mouse", "sharp", "blank", "phone", "pizza"]
 var thisJumble, outputId, answer, answerLength, level, levelComplexity;
-
-/*
-var jumble=["lhep","eohp","dcru","rbea","uoyr","pnis","rokw","uthn","phso","rakp","gsno","alyp","mtei","ilev","npki","kboo","aemt","eols","epon,skir"];
-var answer=["help","hope","curd","bear","your","spin","work","hunt","shop","park","song","play","time","live","pink","book","team","lose","open","risk"];
-
-*/
-
 var index = 0;
 var score = 0;
-var randomAnsJumble=[],randomJumble=[],randomJumbleIndex;
+var randomAnsJumble = [], randomJumble = [], randomJumbleIndex, CorrectAns = [];
 
 
-
-
-
+function previousWord() {
+	index = index - 1;
+	setJumbleUI(level);
+}
 function setJumbleUI(level) {
 	thisJumble = randomJumble[index];
-	console.log(randomJumble, index, thisJumble);
-	//var x = document.getElementById("jumble");
-	
+	if (index == 0) {
+		document.getElementById("previous").disabled = true;
+	}
+	else {
+		document.getElementById("previous").disabled = false;
+	}
 	document.getElementById(levelComplexity + "1").innerHTML = randomJumble[index].charAt([0]);
 	document.getElementById(levelComplexity + "2").innerHTML = randomJumble[index].charAt([1]);
 	document.getElementById(levelComplexity + "3").innerHTML = randomJumble[index].charAt([2]);
@@ -35,14 +32,8 @@ function setJumbleUI(level) {
 		document.getElementById(levelComplexity + "4").innerHTML = randomJumble[index].charAt([3]);
 	if (levelComplexity === "tough")
 		document.getElementById(levelComplexity + "5").innerHTML = randomJumble[index].charAt([4]);
-
-	//x.style.display = "none";
 }
 
-// function words(val)
-// {
-// document.getElementById("output").value=document.getElementById("output").value + val;
-// }
 function hideAndShow() {
 	var x = document.getElementById("jumble");
 	if (x.style.display === "none") {
@@ -66,8 +57,8 @@ function easyGame() {
 	y.style.display = "block";
 	var a = document.getElementById("levels");
 	a.style.display = "none";
-	
 }
+
 function mediumGame() {
 	level = mediumjumble;
 	answer = mediumanswer;
@@ -84,7 +75,6 @@ function mediumGame() {
 	y.style.display = "block";
 	var a = document.getElementById("levels");
 	a.style.display = "none";
-
 }
 
 function toughGame() {
@@ -103,7 +93,6 @@ function toughGame() {
 	y.style.display = "none";
 	var a = document.getElementById("levels");
 	a.style.display = "none";
-
 }
 
 function commaSpliter(string) {
@@ -117,19 +106,18 @@ function fillAnswer(id, level) {
 	thisJumble = randomJumble[index];
 	if (level == "easy") {
 		outputId = "easyOutput";
-		
+
 		answerLength = 3;
 	}
 	if (level == "medium") {
 		outputId = "mediumOutput";
-		
+
 		answerLength = 4;
 	}
 	if (level == "tough") {
 		outputId = "toughOutput";
 		answerLength = 5;
 	}
-	console.log('thisJumble', thisJumble);
 	if (id == 1) {
 		document.getElementById(outputId).value = document.getElementById(outputId).value + thisJumble.charAt([id - 1]);
 
@@ -160,7 +148,6 @@ function isanswercorrect() {
 		}
 		else {
 			failure = true;
-
 		}
 	}
 	else {
@@ -170,16 +157,18 @@ function isanswercorrect() {
 			}
 			else {
 				failure = true;
-
 			}
 		}
 	}
 
 	if (success === true) {
+		if (CorrectAns.indexOf(randomAnsJumble[index]) == -1) {
+			CorrectAns.push(randomAnsJumble[index]);
+			score++;
+			updateScore();
+		}
 		alert("Well done!! Correct answer!!");
 		clearOutput();
-		score++;
-		updateScore();
 		nextWord();
 	}
 	else {
@@ -188,43 +177,34 @@ function isanswercorrect() {
 
 	}
 }
-function calculateRandomArray(){
-return level[Math.floor(Math.random() * level.length)];
+function calculateRandomArray() {
+	return level[Math.floor(Math.random() * level.length)];
 }
-function randomArray(){
-	console.log(level);
-	for(i=0;i<10;i++){
-	 var x=	calculateRandomArray();
-	 if(randomJumble.indexOf(x) === -1){
+function randomArray() {
+	while (randomJumble.length <= 4) {
+		var x = calculateRandomArray();
+		if (randomJumble.indexOf(x) === -1) {
 			randomJumble.push(x);
-
+		}
 	}
-	else{
-	x=calculateRandomArray();
+	for (i = 0; i <= 5; i++) {
+		randomJumbleIndex = level.indexOf(randomJumble[i])
+		randomAnsJumble.push(answer[randomJumbleIndex])
 	}
-	}
-		
-
-for(i=0;i<10;i++){
-	randomJumbleIndex = level.indexOf(randomJumble[i])
-	randomAnsJumble.push(answer[randomJumbleIndex])
 }
-}
-	
-	
-
 
 function nextWord() {
-
-
-
 	index = index + 1;
 
 	// if all word finished, alert game over 
-	console.log('randomJumble.length, index', randomJumble);
 	if (index > (randomJumble.length - 1)) {
-
-		alert("Game over!!")
+		if (score == 5 || score == 4) {
+			alert("Game over!!\nwelldone!!try next level\nscore:" + score)
+		}
+		else {
+			alert("Game over!!\ngood try!!try again\nscore:" + score)
+		}
+		location.reload();
 	} else {
 		setJumbleUI(randomJumble);
 	}
@@ -240,8 +220,6 @@ function updateScore() {
 
 }
 function whileOnloading() {
-	console.log(document.getElementById("easyOutput").maxLength);
-	var b = document.getElementById("difficulties");
+	var b = document.getElementById("difficulties");;
 	b.style.display = "none";
 }
-
